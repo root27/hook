@@ -13,6 +13,7 @@ type Cli struct {
 	Token         string
 	WebhookUrl    string
 	WebhookSecret string
+	Events        []string
 	HttpClient    *http.Client
 }
 
