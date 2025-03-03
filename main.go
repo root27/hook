@@ -15,6 +15,8 @@ func main() {
 	//webhook url
 	//webhook secret
 
+	//NOTE:Events array will be added as cli argument
+
 	fmt.Println("Welcome to the Github Webhook CLI")
 
 	var username string
@@ -38,6 +40,33 @@ func main() {
 	fmt.Print(color.YellowString("Enter the webhook secret (suggested): "))
 	fmt.Scanln(&secret)
 
+	var number_events int
+
+	fmt.Print(color.YellowString("Enter the number of events that you want (default:1): "))
+	fmt.Scanln(&number_events)
+
+	if number_events == 0 {
+		number_events = 1
+	}
+
+	var events []string
+
+	for i := 0; i < number_events; i++ {
+
+		var event string
+		fmt.Print(color.RedString("Enter the event name (default:push): "))
+		fmt.Scanln(&event)
+
+		if event == "" {
+
+			event = "push"
+
+		}
+
+		events = append(events, event)
+
+	}
+
 	if url == "" || token == "" || username == "" {
 		fmt.Println(color.RedString("All fields are required"))
 		return
@@ -48,6 +77,7 @@ func main() {
 		Token:         token,
 		WebhookUrl:    url,
 		WebhookSecret: secret,
+		Events:        events,
 		HttpClient:    &http.Client{},
 	}
 
