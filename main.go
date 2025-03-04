@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/fatih/color"
+	"github.com/root27/hook/internal"
 	"net/http"
 	"os"
 	"os/signal"
@@ -14,8 +15,6 @@ func main() {
 	//github token
 	//webhook url
 	//webhook secret
-
-	//NOTE:Events array will be added as cli argument
 
 	fmt.Println("Welcome to the Github Webhook CLI")
 
@@ -72,7 +71,7 @@ func main() {
 		return
 	}
 
-	cli := Cli{
+	cli := internal.Cli{
 		Username:      username,
 		Token:         token,
 		WebhookUrl:    url,

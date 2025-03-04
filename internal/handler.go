@@ -1,4 +1,4 @@
-package main
+package internal
 
 import (
 	"encoding/json"
@@ -54,6 +54,8 @@ func (c *Cli) HandleRepos() {
 
 			}
 
+			fmt.Printf("Webhook created for %s\n", repo.(map[string]any)["name"])
+
 		}
 	}
 
@@ -66,7 +68,7 @@ func (c *Cli) CreateWebHook(repo Repository) error {
 	payload := map[string]any{
 		"name":   "web",
 		"active": true,
-		"events": []string{"push"},
+		"events": c.Events,
 		"config": map[string]any{
 			"url":          c.WebhookUrl,
 			"content_type": "json",
@@ -161,7 +163,6 @@ func (c *Cli) GetRepos() ([]Repository, error) {
 
 		allRepos = append(allRepos, repos...)
 
-		// Check for pagination
 		linkHeader := resp.Header.Get("Link")
 		if !strings.Contains(linkHeader, "rel=\"next\"") {
 			break // No more pages
